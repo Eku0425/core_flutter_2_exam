@@ -34,7 +34,7 @@ class _studentAPPState extends State<studentAPP> {
       initialRoute: '/',
       routes: {
         '/': (context) => SplashScreen(),
-        '/home': (context) => HomeScreen(),
+        '/home': (context) => HomePage(),
       },
     );
   }

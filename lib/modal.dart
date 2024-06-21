@@ -1,13 +1,13 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 
-class studetmodal {
-  //make modle
-  String student_name;
-  String student_standard;
+class Data {
+  late String student_name,student_grid,student_standard;
   File? student_image;
-  int student_grid;
-
-  studetmodal({this.student_name = '',this.student_image ,this.student_standard = '',this.student_grid = 100});
+  Data({required this.student_grid,this.student_image,required this.student_name,required this.student_standard});
 }
+
+List StudentsData = [
+];
+
+int SelctedIndex=0;

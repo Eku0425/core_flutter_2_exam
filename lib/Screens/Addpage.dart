@@ -1,27 +1,29 @@
-import 'package:flutter/material.dart';
+
 import 'dart:io';
+
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 
 import '../modal.dart';
 
-class Upadat extends StatefulWidget {
-  const Upadat({super.key});
+class AddDataPage extends StatefulWidget {
+  const AddDataPage({super.key});
 
   @override
-  State<Upadat> createState() => _UpadatState();
+  State<AddDataPage> createState() => _AddDataPageState();
 }
 
-class _UpadatState extends State<Upadat> {
+class _AddDataPageState extends State<AddDataPage> {
   @override
   Widget build(BuildContext context) {
     ImagePicker imagePicker = ImagePicker();
-    TextEditingController StudentName = TextEditingController(text: StudentsData[SelctedIndex].student_name);
-    TextEditingController Std = TextEditingController(text: StudentsData[SelctedIndex].student_standard.toString());
+    TextEditingController FullName = TextEditingController(text: StudentsData[SelctedIndex].student_name);
+    TextEditingController STD = TextEditingController(text: StudentsData[SelctedIndex].student_standard.toString());
     TextEditingController Grid = TextEditingController(text: StudentsData[SelctedIndex].student_grid.toString());
     return Scaffold(
       appBar: AppBar(
-        title: Text('Stdunt Data',style: TextStyle(color:Colors.grey,fontSize: 25),),
+        title: Text('Student Data',style: TextStyle(color: Colors.grey,fontSize: 25),),
       ),
       body: Column(
         children: [
@@ -49,13 +51,13 @@ class _UpadatState extends State<Upadat> {
                   ),
                   SizedBox(height: 15,),
                   TextFormField(
-                    controller: StudentName,
+                    controller: FullName,
                     autocorrect: true,
                     decoration: InputDecoration(
                         label: Text(' Student Name'),
                         border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide(color: Colors.black54),
+                          borderRadius: BorderRadius.circular(10),
                         )),
                   ),
                   SizedBox(height: 15,),
@@ -66,13 +68,13 @@ class _UpadatState extends State<Upadat> {
                         return 'Fill The Field';
                       }
                     },
-                    controller: Std,
+                    controller: STD,
                     autocorrect: true,
                     decoration: InputDecoration(
                         label: Text('Std'),
                         border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide(color: Colors.black54),
+                          borderRadius: BorderRadius.circular(10),
                         )),
                   ),
                   SizedBox(height: 15,),
@@ -87,10 +89,10 @@ class _UpadatState extends State<Upadat> {
                     controller: Grid,
                     autocorrect: true,
                     decoration: InputDecoration(
-                        label: Text('Grid'),
+                        label: Text('GrId'),
                         border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide(color: Colors.black54),
+                          borderRadius: BorderRadius.circular(10),
                         )),
                   ),
                   SizedBox(height: 15,),
@@ -100,9 +102,9 @@ class _UpadatState extends State<Upadat> {
                     });
                     StudentsData[SelctedIndex].student_grid=Grid.text;
                     StudentsData[SelctedIndex].student_image=fileImage2;
-                    StudentsData[SelctedIndex].student_standard=Std.text;
-                    StudentsData[SelctedIndex].student_name=StudentName.text;
-                  }, child: Text('Submited',style: TextStyle(color: Colors.grey,fontSize: 15),)),
+                    StudentsData[SelctedIndex].student_standard=STD.text;
+                    StudentsData[SelctedIndex].student_name=FullName.text;
+                  }, child: Text('Submited')),
                 ],
               ),
             ),

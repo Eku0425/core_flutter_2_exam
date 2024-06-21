@@ -1,80 +1,116 @@
+import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
 
 import '../modal.dart';
-import 'card.dart';
+import 'Addpage.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State<HomeScreen> createState() => HomeScreenState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class HomeScreenState extends State<HomeScreen> {
-  List<studetmodal> studentlist = [];
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      appBar: AppBar(
-        title: Text('Student List'),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () {
+    Timer(Duration(seconds: 2), () {
+      setState(() {
 
-            },
-
-          ),
-        ],
-      ),
-      body: Center(
-        child: (studentlist != null)?
-        Column(
+      });
+    },);
+    ImagePicker imagePicker = ImagePicker();
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Home Page',style: TextStyle(color: Colors.grey,),),
+        ),
+        body: Column(
           children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: studentlist.length,
-                itemBuilder: (context, index) {
-                  return studentcardWidget(
-                    student: studentlist[index],
-                    onDelete: () {
-                      setState(() {
-                        studentlist.removeAt(index);
-                      });
-                    },
-                  );
-                },
-              ),
-            ),
-            SizedBox(height: 10),
-            Row(
-              children: [
-                SizedBox(width: 20),
-                FloatingActionButton(
-                  backgroundColor:  Colors.grey,
-                  onPressed: () {
-                    setState(() {
-                      studentlist.add(studetmodal());
-                    });
-                  },
-                  child: Icon(Icons.person_add_outlined),),
-                SizedBox(width: 260),
-                FloatingActionButton(
-                  onPressed: () {
+            ...List.generate(
+              StudentsData.length,
+                  (index) => Padding(
+                padding: const EdgeInsets.only(left: 8.0, right: 8, top: 5),
+                child: Card(
+                  child: ListTile(
+                      leading: GestureDetector(
+                        onTap: () async {
+                          XFile? xFileImage = await imagePicker.pickImage(
+                              source: ImageSource.gallery);
+                          setState(() {
+                            if (xFileImage != null) {
+                              fileImage = File(xFileImage!.path);
+                            }
+                          });
+                        },
+                        child: CircleAvatar(
+                          radius: 30,
+                          backgroundImage:
+                          StudentsData[index].student_image != null ? FileImage(StudentsData[index].student_image) : null,
+                        ),
+                      ),
+                      title: Text(
+                          '${StudentsData[index].student_name} ( GR ID : ${StudentsData[index].student_grid} )'),
+                      subtitle:
+                      Text('STD : ${StudentsData[index].student_standard}'),
+                      trailing: Container(
+                        width: 100,
 
-                  },
-                  child: Icon(Icons.edit),
-                  backgroundColor: Colors.grey,
+                        child: Row(
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  SelctedIndex=index;
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => AddDataPage(),
+                                  ));
+                                },
+                                icon: Icon(Icons.mode_edit_outline_sharp)),
+                            IconButton(
+                                onPressed: () {
+                                  StudentsData.removeAt(index);
+                                  setState(() {
+
+                                  });
+                                },
+                                icon: Icon(Icons.delete_outline_sharp)),
+                          ],
+                        ),
+                      )),
                 ),
-              ],
-            ),
-            SizedBox(height: 20),
-
+              ),
+            )
           ],
-        )
-            :Text('No student\'s available.'),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            setState(() {
+
+            });
+            StudentsData.add(Data(student_grid: '',student_name: '',student_standard: '',student_image: null),);
+          },
+          child: Icon(Icons.add),
+        ),
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: () {
+        //     setState(() {
+        //
+        //     });
+        //     StudentsData.add(Data(student_grid: '',student_name: '',student_standard: '',student_image: null),);
+        //   },
+        //   child: Icon(Icons.abc_outlined),
+        // ),
+
+
+
       ),
     );
   }
 }
+
+
+File? fileImage;
